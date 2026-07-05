@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Transformation Gallery | Glow Beauty Studio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght=0,400..900;1,400..900&family=Poppins:wght=300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* --- CORE CONFIGURATION & THEME --- */
+        :root {
+            --bg-color: #FFF8F3;
+            --rose-gold: #D4A373;
+            --peach: #FFD6BA;
+            --cream: #FAEDCD;
+            --dark-brown: #5C4033;
+            --glass-bg: rgba(250, 237, 205, 0.35);
+            --glass-border: rgba(212, 163, 115, 0.25);
+            --white: #ffffff;
+            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--dark-brown);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, .brand-logo {
+            font-family: 'Playfair Display', serif;
+            color: var(--dark-brown);
+        }
+
+        /* --- SCROLL PROGRESS BAR --- */
+        #progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(to right, var(--rose-gold), var(--dark-brown));
+            width: 0%;
+            z-index: 9999;
+        }
+
+        /* --- NAVIGATION BAR --- */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px 8%;
+            background: rgba(255, 248, 243, 0.9);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .brand-logo {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .brand-logo span {
+            color: var(--rose-gold);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            font-size: 14px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: var(--transition);
+            position: relative;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--rose-gold);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover::after, .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: var(--rose-gold);
+        }
+
+        .cta-btn {
+            background-color: var(--rose-gold);
+            color: var(--white);
+            padding: 10px 24px;
+            border-radius: 30px;
+            font-weight: 500;
+            border: 1px solid transparent;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+
+        /* --- HERO SECTION --- */
+        .gallery-hero {
+            height: 35vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(255,214,186,0.3) 0%, rgba(250,237,205,0.2) 100%);
+            margin-top: 75px;
+            padding: 0 20px;
+        }
+
+        .gallery-hero h1 {
+            font-size: 46px;
+            margin-bottom: 10px;
+        }
+
+        /* --- FILTER BUTTONS --- */
+        .filter-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            padding: 40px 8% 20px 8%;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background-color: var(--white);
+            border: 1px solid var(--rose-gold);
+            padding: 10px 28px;
+            border-radius: 25px;
+            font-weight: 500;
+            font-size: 14px;
+            cursor: pointer;
+            color: var(--dark-brown);
+            transition: var(--transition);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background-color: var(--rose-gold);
+            color: var(--white);
+            box-shadow: 0 5px 15px rgba(212, 163, 115, 0.3);
+        }
+
+        /* --- MASONRY STYLE INSTAGRAM GALLERY --- */
+        .gallery-section {
+            padding: 20px 8% 80px 8%;
+        }
+
+        .gallery-masonry {
+            columns: 4 280px;
+            column-gap: 20px;
+        }
+
+        .gallery-item {
+            background-color: var(--white);
+            margin-bottom: 20px;
+            break-inside: avoid;
+            border-radius: 16px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 4px 15px rgba(92, 64, 51, 0.05);
+            border: 1px solid var(--glass-border);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        /* Scale and Reveal Effect */
+        .gallery-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: var(--transition);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, rgba(92, 64, 51, 0.8), rgba(212, 163, 115, 0.2));
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 20px;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .gallery-overlay h3 {
+            color: var(--bg-color);
+            font-size: 18px;
+            transform: translateY(10px);
+            transition: var(--transition);
+        }
+
+        .gallery-overlay span {
+            color: var(--peach);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(92, 64, 51, 0.15);
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.06);
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+
+        .gallery-item:hover .gallery-overlay h3 {
+            transform: translateY(0);
+        }
+
+        /* Animation class for JS filtering */
+        .gallery-item.hide {
+            transform: scale(0.8);
+            opacity: 0;
+            width: 0;
+            height: 0;
+            margin: 0;
+            padding: 0;
+            border: none;
+            pointer-events: none;
+            position: absolute; /* Takes out from columns calculation */
+        }
+
+        /* --- LIGHTBOX MODAL --- */
+        .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(40, 27, 21, 0.95);
+            z-index: 2000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .lightbox.show {
+            display: flex;
+            opacity: 1;
+        }
+
+        .lightbox-content {
+            max-width: 85%;
+            max-height: 80vh;
+            border-radius: 10px;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.5);
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+
+        .lightbox.show .lightbox-content {
+            transform: scale(1);
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 30px;
+            right: 40px;
+            color: var(--bg-color);
+            font-size: 35px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .lightbox-close:hover {
+            color: var(--rose-gold);
+        }
+
+        /* --- FLOATING UTILITIES --- */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #25d366;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 999;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background-color: var(--dark-brown);
+            color: var(--bg-color);
+            padding: 30px 8%;
+            text-align: center;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="progress-bar"></div>
+
+    <nav class="navbar">
+        <div class="brand-logo">Maahi<span>Beauty</span></div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="packages.html">Packages</a></li>
+            <li><a href="gallery.html" class="active">Gallery</a></li>
+            <li><a href="booking.html">Booking</a></li>
+        </ul>
+        <a href="#" class="cta-btn">Book Now</a>
+    </nav>
+
+    <section class="gallery-hero">
+        <h1>Our Visual Masterpieces</h1>
+        <p>Explore the real transformation stories crafted by our top beauty and hair experts.</p>
+    </section>
+
+
+    <div class="filter-container">
+    <button class="filter-btn active" onclick="filterGallery('all', this)">All Work</button>
+    <button class="filter-btn" onclick="filterGallery('makeup', this)">Makeup</button>
+    <button class="filter-btn" onclick="filterGallery('hair', this)">Hair Styles & Color</button>
+    <button class="filter-btn" onclick="filterGallery('facial', this)">Facial</button>
+    <button class="filter-btn" onclick="filterGallery('nails', this)">Nail Art</button>
+    <button class="filter-btn" onclick="filterGallery('footcare', this)">Foot Care</button>
+</div>
+
+    <section class="gallery-section">
+    <div class="gallery-masonry" id="masonry-grid">
+        
+        <!-- Item 1: Makeup -->
+        <div class="gallery-item" data-category="makeup" onclick="handleGalleryClick(event, this)">
+            <img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?q=80&w=500&auto=format&fit=crop" alt="Bridal Look">
+            <div class="gallery-overlay">
+                <span>Makeup</span>
+                <h3>Royal Bridal HD Look</h3>
+                <a href="booking.html?service=bridal" class="gallery-book-btn"><i class="fa-solid fa-calendar-check"></i> Book Look</a>
+            </div>
+        </div>
+
+        <!-- NEW Item 2: Facial (Skin Care) -->
+        <div class="gallery-item" data-category="facial" onclick="handleGalleryClick(event, this)">
+            <img src="https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?q=80&w=500&auto=format&fit=crop" alt="Hydra Facial">
+            <div class="gallery-overlay">
+                <span>Facial</span>
+                <h3>Advanced Hydra Facial Therapy</h3>
+                <a href="booking.html?service=facial" class="gallery-book-btn"><i class="fa-solid fa-calendar-check"></i> Book Look</a>
+            </div>
+        </div>
+
+        <!-- Item 3: Hair (Styling) -->
+        <div class="gallery-item" data-category="hair" onclick="handleGalleryClick(event, this)">
+            <img src="https://images.unsplash.com/photo-1562322140-8baeececf3df?q=80&w=500&auto=format&fit=crop" alt="Hair Color">
+            <div class="gallery-overlay">
+                <span>Hair</span>
+                <h3>Premium Honey Balayage</h3>
+                <a href="booking.html?service=haircolor" class="gallery-book-btn"><i class="fa-solid fa-calendar-check"></i> Book Look</a>
+            </div>
+        </div>
+
+        <!-- NEW Item 4: Foot Care (Pedicure) -->
+
+        <div class="gallery-item" data-category="footcare" onclick="handleGalleryClick(event, this)">
+    <!-- High-quality live production ready image path -->
+    <img src="img/images (3).jfif" alt="Luxury Pedicure">
+    <div class="gallery-overlay">
+        <span>Foot Care</span>
+        <h3>Luxury Organic Pedicure</h3>
+        <a href="booking.html?service=pedicure" class="gallery-book-btn"><i class="fa-solid fa-calendar-check"></i> Book Look</a>
+    </div>
+</div>
+
+<div class="gallery-item" data-category="footcare" onclick="handleGalleryClick(event, this)">
+    <!-- High-quality live production ready image path -->
+    <img src="img/image-2.jpg" alt="Luxury Pedicure">
+    <div class="gallery-overlay">
+        <span>Foot Care</span>
+        <h3>Luxury Organic Pedicure</h3>
+        <a href="booking.html?service=pedicure" class="gallery-book-btn"><i class="fa-solid fa-calendar-check"></i> Book Look</a>
+    </div>
+</div>
+<div class="gallery-item" data-category="footcare" onclick="handleGalleryClick(event, this)">
+    <!-- High-quality live production ready image path -->
+    <img src="img/images.jfif" alt="Luxury Pedicure">
+    <div class="gallery-overlay">
+        <span>Foot Care</span>
+        <h3>Luxury Organic Pedicure</h3>
+        <a href="booking.html?service=pedicure" class="gallery-book-btn"><i class="fa-solid fa-calendar-check"></i> Book Look</a>
+    </div>
+</div>
+
+<div class="gallery-item" data-category="footcare" onclick="handleGalleryClick(event, this)">
+    <!-- High-quality live production ready image path -->
+    <img src="img/images (1).jfif" alt="Luxury Pedicure">
+    <div class="gallery-overlay">
+        <span>Foot Care</span>
+        <h3>Luxury Organic Pedicure</h3>
+        <a href="booking.html?service=pedicure" class="gallery-book-btn"><i class="fa-solid fa-calendar-check"></i> Book Look</a>
+    </div>
+</div>
+
+
+        <!-- Item 5: Nails -->
+        <div class="gallery-item" data-category="nails" onclick="handleGalleryClick(event, this)">
+            <img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?q=80&w=500&auto=format&fit=crop" alt="Nail Art">
+            <div class="gallery-overlay">
+                <span>Nails</span>
+                <h3>3D Pastel Gel Extensions</h3>
+                <a href="booking.html?service=nails" class="gallery-book-btn"><i class="fa-solid fa-calendar-check"></i> Book Look</a>
+            </div>
+        </div>
+
+        <!-- Item 6: Makeup -->
+        <div class="gallery-item" data-category="makeup" onclick="handleGalleryClick(event, this)">
+            <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?q=80&w=500&auto=format&fit=crop" alt="Engagement Makeup">
+            <div class="gallery-overlay">
+                <span>Makeup</span>
+                <h3>Dewy Engagement Glam</h3>
+                <a href="booking.html?service=makeup" class="gallery-book-btn"><i class="fa-solid fa-calendar-check"></i> Book Look</a>
+            </div>
+        </div>
+
+        <!-- NEW Item 7: Hair Color -->
+        <div class="gallery-item" data-category="hair" onclick="handleGalleryClick(event, this)">
+            <img src="https://images.unsplash.com/photo-1605497746445-97d1b0a9eeae?q=80&w=500&auto=format&fit=crop" alt="Ash Blonde Hair Color">
+            <div class="gallery-overlay">
+                <span>Hair Color</span>
+                <h3>Metallic Ash Blonde Highlights</h3>
+                <a href="booking.html?service=haircolor" class="gallery-book-btn"><i class="fa-solid fa-calendar-check"></i> Book Look</a>
+            </div>
+        </div>
+
+        <!-- Item 8: Hair -->
+        <div class="gallery-item" data-category="hair" onclick="handleGalleryClick(event, this)">
+            <img src="https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?q=80&w=500&auto=format&fit=crop" alt="Luxury Curls">
+            <div class="gallery-overlay">
+                <span>Hair</span>
+                <h3>Hollywood Red-Carpet Curls</h3>
+                <a href="booking.html?service=hair" class="gallery-book-btn"><i class="fa-solid fa-calendar-check"></i> Book Look</a>
+            </div>
+        </div>
+
+        <!-- Item 9: Nails -->
+        <div class="gallery-item" data-category="nails" onclick="handleGalleryClick(event, this)">
+            <img src="https://images.unsplash.com/photo-1519014816548-bf5fe059798b?q=80&w=500&auto=format&fit=crop" alt="Chrome Nails">
+            <div class="gallery-overlay">
+                <span>Nails</span>
+                <h3>Metallic Chrome Shimmer</h3>
+                <a href="booking.html?service=nails" class="gallery-book-btn"><i class="fa-solid fa-calendar-check"></i> Book Look</a>
+            </div>
+        </div>
+
+        <!-- Item 10: Makeup -->
+        <div class="gallery-item" data-category="makeup" onclick="handleGalleryClick(event, this)">
+            <img src="https://images.unsplash.com/photo-1512496015851-a90fb38ba796?q=80&w=500&auto=format&fit=crop" alt="Smokey Eyes">
+            <div class="gallery-overlay">
+                <span>Makeup</span>
+                <h3>Classic Bold Smokey Eye</h3>
+                <a href="booking.html?service=makeup" class="gallery-book-btn"><i class="fa-solid fa-calendar-check"></i> Book Look</a>
+            </div>
+        </div>
+
+    </div>
+
+    
+</section>
+
+    <div class="lightbox" id="custom-lightbox">
+        <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+        <img class="lightbox-content" id="lightbox-img" src="" alt="Enlarged View">
+    </div>
+
+    <a href="https://wa.me/1234567890" class="whatsapp-float" target="_blank">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <footer>
+        &copy; 2026 Glow Beauty Studio. Instagram Style UI Concept.
+    </footer>
+
+    <script>
+        // Scroll Progress Bar
+        window.onscroll = function() {
+            let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            let scrolled = (winScroll / height) * 100;
+            document.getElementById("progress-bar").style.width = scrolled + "%";
+        };
+
+        // Filter Gallery Logic
+        function filterGallery(category, btn) {
+            // Manage Active Button State
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            // Manage Items Filtering Animation
+            const items = document.querySelectorAll('.gallery-item');
+            items.forEach(item => {
+                if(category === 'all' || item.getAttribute('data-category') === category) {
+                    item.classList.remove('hide');
+                } else {
+                    item.classList.add('hide');
+                }
+            });
+        }
+
+        // Lightbox Open & Close Logic
+        const lightbox = document.getElementById('custom-lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+
+        function openLightbox(element) {
+            const imgSrc = element.querySelector('img').src;
+            lightboxImg.src = imgSrc;
+            lightbox.classList.add('show');
+        }
+
+        function closeLightbox() {
+            lightbox.classList.remove('show');
+        }
+
+        // Close Lightbox on Clicking Outside the image
+        lightbox.addEventListener('click', (e) => {
+            if(e.target === lightbox) {
+                closeLightbox();
+            }
+        });
+
+        if (selectedService === 'facial') {
+    serviceSelect.value = "Advanced Hydra Facial";
+} else if (selectedService === 'haircolor') {
+    serviceSelect.value = "Premium Hair Cut & Styling"; // Ya jo bhi aap ka hair service name ho
+} else if (selectedService === 'pedicure') {
+    serviceSelect.value = "Luxury Manicure & Pedicure";
+}
+    </script>
+</body>
+</html>

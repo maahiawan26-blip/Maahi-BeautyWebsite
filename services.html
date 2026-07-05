@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Premium Services | Glow Beauty Studio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght=0,400..900;1,400..900&family=Poppins:wght=300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* --- CORE CONFIGURATION & THEME (Matching Home Page) --- */
+        :root {
+            --bg-color: #FFF8F3;
+            --rose-gold: #D4A373;
+            --peach: #FFD6BA;
+            --cream: #FAEDCD;
+            --dark-brown: #5C4033;
+            --glass-bg: rgba(250, 237, 205, 0.35);
+            --glass-border: rgba(212, 163, 115, 0.25);
+            --white: #ffffff;
+            --transition: all 0.3s ease-in-out;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--dark-brown);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, .brand-logo, .category-title {
+            font-family: 'Playfair Display', serif;
+            color: var(--dark-brown);
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* --- SCROLL PROGRESS BAR --- */
+        #progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(to right, var(--rose-gold), var(--dark-brown));
+            width: 0%;
+            z-index: 9999;
+        }
+
+        /* --- NAVIGATION BAR --- */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px 8%;
+            background: rgba(255, 248, 243, 0.9);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .brand-logo {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .brand-logo span {
+            color: var(--rose-gold);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            font-size: 14px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--rose-gold);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover::after, .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: var(--rose-gold);
+        }
+
+        .cta-btn {
+            background-color: var(--rose-gold);
+            color: var(--white);
+            padding: 10px 24px;
+            border-radius: 30px;
+            font-weight: 500;
+            border: 1px solid transparent;
+            transition: var(--transition);
+        }
+
+        .cta-btn:hover {
+            background-color: transparent;
+            border-color: var(--rose-gold);
+            color: var(--dark-brown);
+        }
+
+        /* --- SERVICES HERO SECTION --- */
+        .services-hero {
+            height: 40vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(255,214,186,0.4) 0%, rgba(250,237,205,0.3) 100%);
+            margin-top: 75px;
+            padding: 0 20px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .services-hero h1 {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+
+        .services-hero p {
+            font-size: 16px;
+            color: #7c5c4c;
+            max-width: 600px;
+        }
+
+        /* --- CATEGORIES WRAPPER --- */
+        .category-section {
+            padding: 80px 8% 40px 8%;
+        }
+
+        .category-section:nth-child(even) {
+            background-color: rgba(250, 237, 205, 0.15);
+        }
+
+        .category-title {
+            font-size: 32px;
+            margin-bottom: 40px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border-bottom: 2px solid var(--peach);
+            padding-bottom: 10px;
+        }
+
+        .category-title i {
+            color: var(--rose-gold);
+            font-size: 28px;
+        }
+
+        /* --- GRID AND GLASSMORPHISM CARDS --- */
+        .items-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .item-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 15px;
+            padding: 25px;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 4px 20px rgba(92, 64, 51, 0.03);
+        }
+
+        .item-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.8);
+            border-color: var(--rose-gold);
+            box-shadow: 0 10px 25px rgba(212, 163, 115, 0.15);
+        }
+
+        .item-info h4 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--dark-brown);
+        }
+
+        .item-info p {
+            font-size: 13px;
+            color: #7c5c4c;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+
+        .item-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+            border-top: 1px dashed rgba(92, 64, 51, 0.15);
+            padding-top: 15px;
+        }
+
+        .item-price {
+            font-weight: 700;
+            color: var(--rose-gold);
+            font-size: 16px;
+        }
+
+        .book-item-btn {
+            font-size: 12px;
+            text-transform: uppercase;
+            font-weight: 600;
+            color: var(--dark-brown);
+            letter-spacing: 0.5px;
+            transition: var(--transition);
+        }
+
+        .book-item-btn:hover {
+            color: var(--rose-gold);
+            letter-spacing: 1px;
+        }
+
+        /* --- WAXING SUBSECTIONS --- */
+        .waxing-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .waxing-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .sub-category-title {
+            font-size: 20px;
+            margin-bottom: 20px;
+            font-weight: 600;
+            color: var(--rose-gold);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* --- QUICK BOOKING BANNER --- */
+        .booking-banner {
+            background: linear-gradient(135deg, var(--dark-brown) 0%, #3e2a21 100%);
+            color: var(--bg-color);
+            text-align: center;
+            padding: 80px 8%;
+            margin-top: 40px;
+        }
+
+        .booking-banner h2 {
+            color: var(--peach);
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+
+        .booking-banner p {
+            font-size: 16px;
+            max-width: 600px;
+            margin: 0 auto 30px auto;
+            color: var(--cream);
+        }
+
+        /* --- FLOATING UTILITIES --- */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #25d366;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 999;
+            transition: var(--transition);
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background-color: #3e2a21;
+            color: var(--bg-color);
+            padding: 40px 8% 20px 8%;
+            text-align: center;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="progress-bar"></div>
+
+    <nav class="navbar">
+        <div class="brand-logo">Maahi<span>Beauty</span></div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="services.html" class="active">Services</a></li>
+            <li><a href="packages.html">Packages</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="booking.html">Booking</a></li>
+        </ul>
+        <a href="#" class="cta-btn">Book Now</a>
+    </nav>
+
+    <section class="services-hero">
+        <h1>Our Luxury Services Menu</h1>
+        <p>Indulge yourself in our wide range of premium salon treatments, curated precisely for your flawless care and rejuvenation.</p>
+    </section>
+
+    <section class="category-section" id="face-care">
+        <h2 class="category-title"><i class="fa-solid fa-face-smile-wink"></i> Face Care Services</h2>
+        <div class="items-grid">
+            <div class="item-card">
+                <div class="item-info">
+                    <h4>Facial</h4>
+                    <p>Classic deep cleansing facial designed to remove impurities and refresh the skin glow.</p>
+                </div>
+                <div class="item-footer">
+                    <span class="item-price">Rs. 2,500</span>
+                    <a href="#" class="book-item-btn">Book <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+            </div>
+            <div class="item-card">
+                <div class="item-info">
+                    <h4>Hydra Facial</h4>
+                    <p>Advanced multi-step dermatological treatment for intense hydration, exfoliation, and radiance.</p>
+                </div>
+                <div class="item-footer">
+                    <span class="item-price">Rs. 6,500</span>
+                    <!-- <a href="#" class="book-item-btn">Book <i class="fa-solid fa-arrow-right"></i></a> -->
+
+                    <a href="booking.html?service=hydra" class="book-item-btn">Book <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+            </div>
+            <div class="item-card">
+                <div class="item-info">
+                    <h4>Cleanup</h4>
+                    <p>Quick skin exfoliation and blackhead removal process for instant smoothness.</p>
+                </div>
+                <div class="item-footer">
+                    <span class="item-price">Rs. 1,500</span>
+                    <a href="booking.html?service=hydra" class="book-item-btn">Book <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+            </div>
+            <div class="item-card">
+                <div class="item-info">
+                    <h4>Whitening Facial</h4>
+                    <p>Specialized melanin reduction therapy to brighten and even out dull skin tone.</p>
+                </div>
+                <div class="item-footer">
+                    <span class="item-price">Rs. 4,000</span>
+                    <a href="booking.html?service=hydra" class="book-item-btn">Book <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+            </div>
+            <div class="item-card">
+                <div class="item-info">
+                    <h4>Anti-Aging Facial</h4>
+                    <p>Collagen boosting therapy targeted to reduce fine lines, wrinkles, and saggy skin.</p>
+                </div>
+                <div class="item-footer">
+                    <span class="item-price">Rs. 5,000</span>
+                    <a href="booking.html?service=hydra" class="book-item-btn">Book <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+            </div>
+            <div class="item-card">
+                <div class="item-info">
+                    <h4>Acne Treatment</h4>
+                    <p>Salicylic formulations paired with blue-light therapy to soothe active inflammation.</p>
+                </div>
+                <div class="item-footer">
+                    <span class="item-price">Rs. 4,500</span>
+                    <a href="booking.html?service=hydra" class="book-item-btn">Book <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+            </div>
+            <div class="item-card">
+                <div class="item-info">
+                    <h4>Face Polishing</h4>
+                    <p>Premium dermo-polisher treatment for an instant radiant glass skin finish.</p>
+                </div>
+                <div class="item-footer">
+                    <span class="item-price">Rs. 2,200</span>
+                    <a href="booking.html?service=hydra" class="book-item-btn">Book <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+            </div>
+            <div class="item-card">
+                <div class="item-info">
+                    <h4>Threading (Eyebrows & Face)</h4>
+                    <p>Precise hair removal using organic anti-bacterial cotton thread lines.</p>
+                </div>
+                <div class="item-footer">
+                    <span class="item-price">Rs. 500</span>
+                    <a href="booking.html?service=hydra" class="book-item-btn">Book <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="category-section" id="hair-care">
+        <h2 class="category-title"><i class="fa-solid fa-scissors"></i> Hair Care Services</h2>
+        <div class="items-grid">
+            <div class="item-card">
+                <div class="item-info">
+                    <h4>Hair Cut</h4>
+                    <p>Advanced standard layers, steps, or custom trendy cuts by professional stylists.</p>
+                </div>
+                <div class="item-footer">
+                    <span class="item-price">Rs. 2,000</span>
+                    <a href="booking.html?service=hydra" class="book-item-btn">Book <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+            </div>
+            <div class="item-card">
+                <div class="item-info">
+                    <h4>Hair Styling</h4>
+                    <p>Blow-dry, luxury curls, crimping, or modern updos suited perfectly for any high-profile party.</p>
+                </div>
+                <div class="item-footer">
+                    <span class="item-price">Rs. 2,500</span>
+                    <a href="booking.html?service=hydra" class="book-item-btn">Book <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+            </div>
+            <div class="item-card">
+                <div class="item-info">
+                    <h4>Hair Color</h4>
+                    <p>Full global color, subtle streaks, ombre, or premium balayage with ammonia-free products.</p>
+                </div>
+                <div class="item-footer">
+                    <span class="item-price">Rs. 8,000+</span>
+                    <a href="booking.html?service=hydra" class="book-item-btn">Book <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+            </div>
+            <div class="item-card">
+                <div class="item-info">
+                    <h4>Hair Spa</h4>
+                    <p>Deep conditioning nourishment mask therapy paired with relaxing steam sessions.</p>
+                </div>
+                <div class="item-footer">
+                    <span class="item-price">Rs. 3,500</span>
+                    <a href="booking.html?service=hydra" class="book-item-btn">Book <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+            </div>
+            <div class="item-card">
+                <div class="item-info">
+                    <h4>Keratin Treatment</h4>
+                    <p>Protein restoration process making frizz-prone hair silky smooth and completely manageable.</p>
+                </div>
+                <div class="item-footer">
+                    <span class="item-price">Rs. 12,000+</span>
+                   <a href="booking.html?service=hydra" class="book-item-btn">Book <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+            </div>
+            <div class="item-card">
+                <div class="item-info">
+                    <h4>Hair Rebonding</h4>
+                    <p>Permanent structural straight hair alignment for ultimate sleek and shiny hair goals.</p>
+                </div>
+                <div class="item-footer">
+                    <span class="item-price">Rs. 15,000+</span>
+                    <a href="booking.html?service=hydra" class="book-item-btn">Book <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+            </div>
+            <div class="item-card">
+                <div class="item-info">
+                    <h4>Hair Extensions</h4>
+                    <p>100% genuine human hair extensions for custom added length and high volume density.</p>
+                </div>
+                <div class="item-footer">
+                    <span class="item-price">On Demand</span>
+                    <a href="booking.html?service=hydra" class="book-item-btn">Book <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="category-section" id="body-treatments">
+        <h2 class="category-title"><i class="fa-solid fa-hot-tub-person"></i> Body Treatment Services</h2>
+        <div class="items-grid">
+            <div class="item-card">
+                <div class="item-info">
+                    <h4>Body Polish</h4>
+                    <p>Full skin clarifying exfoliations utilizing luxury micro-bead glow solutions.</p>
+                </div>
+                <div class="item-footer">
+                    <span class="item-price">Rs. 5,000</span>
+                    <a href="booking.html?service=hydra" class="book-item-btn">Book <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+            </div>
+            <div class="item-card">
+                <div class="item-info">
+                    <h4>Body Scrub</h4>
+                    <p>Organic fruit-extract dead skin scrubbing process to enhance cellular renewal speed.</p>
+                </div>
+                <div class="item-footer">
+                    <span class="item-price">Rs. 3,500</span>
+                    <a href="booking.html?service=hydra" class="book-item-btn">Book <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+            </div>
+            <div class="item-card">
+                <div class="item-info">
+                    <h4>Body Massage / Spa</h4>
+                    <p>Swedish and aromatherapy pressure-point massages for deep muscular detoxification.</p>
+                </div>
+                <div class="item-footer">
+                    <span class="item-price">Rs. 6,000</span>
+                    <a href="booking.html?service=hydra" class="book-item-btn">Book <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+            </div>
+            <div class="item-card">
+                <div class="item-info">
+                    <h4>Skin Brightening Treatment</h4>
+                    <p>Full body premium whitening masks designed for bridal deep skin complexion enhancement.</p>
+                </div>
+                <div class="item-footer">
+                    <span class="item-price">Rs. 8,000</span>
+                   <a href="booking.html?service=hydra" class="book-item-btn">Book <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="category-section" id="hand-foot-care">
+        <h2 class="category-title"><i class="fa-solid fa-hand-sparkles"></i> Hand & Foot Care</h2>
+        <div class="items-grid">
+            <div class="item-card">
+                <div class="item-info">
+                    <h4>Manicure</h4>
+                    <p>Nail shaping, cuticle clearing, scrub exfoliation and therapeutic hand massage routine.</p>
+                </div>
+                <div class="item-footer">
+                    <span class="item-price">Rs. 1,800</span>
+                   <a href="booking.html?service=hydra" class="book-item-btn">Book <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+            </div>
+            <div class="item-card">
+                <div class="item-info">
+                    <h4>Pedicure</h4>
+                    <p>Relaxing tub soak, heel filing, dead skin scrubbing, and relaxing calf massage treatment.</p>
+                </div>
+                <div class="item-footer">
+                    <span class="item-price">Rs. 2,200</span>
+                    <a href="booking.html?service=hydra" class="book-item-btn">Book <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+            </div>
+            <div class="item-card">
+                <div class="item-info">
+                    <h4>Nail Extensions & Art</h4>
+                    <p>Premium acrylic or gel nail extensions stylized with modern custom 3D art patterns.</p>
+                </div>
+                <div class="item-footer">
+                    <span class="item-price">Rs. 3,500+</span>
+                   <a href="booking.html?service=hydra" class="book-item-btn">Book <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="category-section" id="waxing-services">
+        <h2 class="category-title"><i class="fa-solid fa-spray-can"></i> Waxing Services</h2>
+        <div class="waxing-container">
+            <div>
+                <h3 class="sub-category-title">Body Waxing</h3>
+                <div class="items-grid" style="grid-template-columns: 1fr;">
+                    <div class="item-card" style="margin-bottom:15px;">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <h4>Full Arms / Half Arms</h4>
+                            <span class="item-price">Rs. 1,200 / 700</span>
+                        </div>
+                    </div>
+                    <div class="item-card" style="margin-bottom:15px;">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <h4>Full Legs / Half Legs</h4>
+                            <span class="item-price">Rs. 1,800 / 1,000</span>
+                        </div>
+                    </div>
+                    <div class="item-card" style="margin-bottom:15px;">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <h4>Underarms Wax</h4>
+                            <span class="item-price">Rs. 500</span>
+                        </div>
+                    </div>
+                    <div class="item-card">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <h4>Full Body Waxing</h4>
+                            <span class="item-price">Rs. 5,000</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h3 class="sub-category-title">Face Waxing</h3>
+                <div class="items-grid" style="grid-template-columns: 1fr;">
+                    <div class="item-card" style="margin-bottom:15px;">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <h4>Upper Lip & Chin</h4>
+                            <span class="item-price">Rs. 400</span>
+                        </div>
+                    </div>
+                    <div class="item-card" style="margin-bottom:15px;">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <h4>Side Face Waxing</h4>
+                            <span class="item-price">Rs. 800</span>
+                        </div>
+                    </div>
+                    <div class="item-card">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <h4>Full Face Waxing (Rica / Organic)</h4>
+                            <span class="item-price">Rs. 1,500</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="category-section" id="skin-treatments">
+        <h2 class="category-title"><i class="fa-solid fa-wand-magic-sparkles"></i> Skin Treatments (Advanced)</h2>
+        <div class="items-grid">
+            <div class="item-card">
+                <div class="item-info">
+                    <h4>Skin Rejuvenation</h4>
+                    <p>Laser and intense pulsed light therapies to boost natural dermal thickness parameters.</p>
+                </div>
+                <div class="item-footer">
+                    <span class="item-price">Rs. 8,000</span>
+                   <a href="booking.html?service=hydra" class="book-item-btn">Book <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+            </div>
+            <div class="item-card">
+                <div class="item-info">
+                    <h4>Pigmentation Treatment</h4>
+                    <p>Targeted chemical peels and micro-dermabrasion solutions to erase sunspots and dark patches.</p>
+                </div>
+                <div class="item-footer">
+                    <span class="item-price">Rs. 6,000</span>
+                    <a href="booking.html?service=hydra" class="book-item-btn">Book <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+            </div>
+            <div class="item-card">
+                <div class="item-info">
+                    <h4>Glow Therapy</h4>
+                    <p>Vitamin-C infused serum infusion combined with cold therapy for a perfect glass-like sheen.</p>
+                </div>
+                <div class="item-footer">
+                    <span class="item-price">Rs. 5,500</span>
+                    <a href="booking.html?service=hydra" class="book-item-btn">Book <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="category-section" id="bridal-services" style="padding-bottom: 80px;">
+        <h2 class="category-title"><i class="fa-solid fa-gem"></i> Bridal Services</h2>
+        <div class="items-grid">
+            <div class="item-card" style="background: linear-gradient(135deg, rgba(212,163,115,0.2) 0%, rgba(255,214,186,0.3) 100%); border: 1px solid var(--rose-gold);">
+                <div class="item-info">
+                    <h4>Premium Bridal Makeup</h4>
+                    <p>Luxury HD / Airbrush transformation including advanced hair styling, dupatta setting, and real jewelry adjustment.</p>
+                </div>
+                <div class="item-footer">
+                    <span class="item-price">Rs. 35,000</span>
+                    <a href="#" class="book-item-btn" style="color:var(--dark-brown); font-weight:700;">Book Now <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+            </div>
+            <div class="item-card">
+                <div class="item-info">
+                    <h4>Engagement / Mehndi Makeup</h4>
+                    <p>Lightweight dewy or colorful semi-traditional makeover crafted beautifully for pre-wedding functions.</p>
+                </div>
+                <div class="item-footer">
+                    <span class="item-price">Rs. 18,000</span>
+                    <a href="booking.html?service=hydra" class="book-item-btn">Book <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+            </div>
+            <div class="item-card">
+                <div class="item-info">
+                    <h4>Walima / Party Makeup</h4>
+                    <p>Elegant royal reception makeups with soft glitters and premium sleek modern hairstyling aesthetics.</p>
+                </div>
+                <div class="item-footer">
+                    <span class="item-price">Rs. 22,000</span>
+                    <a href="booking.html" class="book-item-btn">Book <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="booking-banner">
+        <h2>Ready for Your Perfect Transformation?</h2>
+        <p>Book your preferred service slot ahead of time to experience hassle-free premium relaxation and dedicated artistry treatments.</p>
+        <a href="booking.html" class="cta-btn" style="padding: 16px 40px; font-size:15px; background-color: var(--rose-gold);">Book Appointment Now</a>
+    </section>
+
+    <a href="https://wa.me/1234567890" class="whatsapp-float" target="_blank">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <footer>
+        &copy; 2026 Glow Beauty Studio. All Premium Layout Rights Reserved.
+    </footer>
+
+    <script>
+        // Scroll Progress Bar Logic
+        window.onscroll = function() {
+            let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            let scrolled = (winScroll / height) * 100;
+            document.getElementById("progress-bar").style.width = scrolled + "%";
+        };
+    </script>
+</body>
+</html>

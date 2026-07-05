@@ -1,0 +1,52 @@
+.hero{
+    min-height:100vh;
+    background-image: linear-gradient(
+        rgba(0,0,0,0.4),
+        rgba(0,0,0,0.4)
+    ),
+    url("img/4898d9a8-66a1-414c-8fda-42a96d654aba-2.png"); /* apni image ka path yahan likho */
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:20px;
+}
+
+.hero-content{
+    max-width:700px;
+    color:#fff;
+}
+
+.hero-tag{
+    display:inline-block;
+    background:#ff4f8b;
+    color:#fff;
+    padding:8px 18px;
+    border-radius:30px;
+    margin-bottom:15px;
+}
+
+.hero h1{
+    font-size:60px;
+    margin-bottom:20px;
+}
+
+.hero p{
+    font-size:18px;
+    line-height:1.8;
+    margin-bottom:25px;
+}
+
+.cta-btn{
+    display:inline-block;
+    text-decoration:none;
+    background:#ff4f8b;
+    color:#fff;
+    padding:15px 35px;
+    border-radius:30px;
+}

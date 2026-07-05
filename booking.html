@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book an Appointment | Glow Beauty Studio</title>
+    <!-- Google Fonts & FontAwesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght=0,400..900;1,400..900&family=Poppins:wght=300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* --- CORE CONFIGURATION & THEME --- */
+        :root {
+            --bg-color: #FFF8F3;
+            --rose-gold: #D4A373;
+            --peach: #FFD6BA;
+            --cream: #FAEDCD;
+            --dark-brown: #5C4033;
+            --glass-bg: rgba(250, 237, 205, 0.4);
+            --glass-border: rgba(212, 163, 115, 0.3);
+            --white: #ffffff;
+            --transition: all 0.4s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--dark-brown);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, .brand-logo {
+            font-family: 'Playfair Display', serif;
+            color: var(--dark-brown);
+        }
+
+        /* --- SCROLL PROGRESS BAR --- */
+        #progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(to right, var(--rose-gold), var(--dark-brown));
+            width: 0%;
+            z-index: 9999;
+        }
+
+        /* --- NAVIGATION BAR --- */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px 8%;
+            background: rgba(255, 248, 243, 0.9);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .brand-logo {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .brand-logo span {
+            color: var(--rose-gold);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            font-size: 14px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: var(--transition);
+            position: relative;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--rose-gold);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover::after, .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: var(--rose-gold);
+        }
+
+        .cta-btn {
+            background-color: var(--rose-gold);
+            color: var(--white);
+            padding: 10px 24px;
+            border-radius: 30px;
+            font-weight: 500;
+            border: 1px solid transparent;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+
+        /* --- BOOKING LAYOUT WRAPPER --- */
+        .booking-section {
+            padding: 120px 8% 80px 8%;
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 40px;
+            align-items: start;
+        }
+
+        @media (max-width: 992px) {
+            .booking-section {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* --- FORM CONTAINER STYLING --- */
+        .booking-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(92, 64, 51, 0.04);
+        }
+
+        .booking-card h2 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .booking-card p {
+            font-size: 14px;
+            color: #7c5c4c;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 22px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+            color: var(--dark-brown);
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 14px 20px;
+            border-radius: 12px;
+            border: 1px solid var(--glass-border);
+            background-color: rgba(255, 255, 255, 0.7);
+            font-size: 15px;
+            color: var(--dark-brown);
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            border-color: var(--rose-gold);
+            background-color: var(--white);
+            box-shadow: 0 0 10px rgba(212, 163, 115, 0.15);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 576px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .submit-booking-btn {
+            width: 100%;
+            background-color: var(--dark-brown);
+            color: var(--bg-color);
+            border: none;
+            padding: 16px;
+            border-radius: 30px;
+            font-size: 15px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 10px;
+        }
+
+        .submit-booking-btn:hover {
+            background-color: var(--rose-gold);
+            color: var(--white);
+            box-shadow: 0 5px 20px rgba(212, 163, 115, 0.3);
+        }
+
+        /* --- DYNAMIC DIGITAL RECEIPT SLIP --- */
+        .receipt-container {
+            background-color: var(--white);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 35px;
+            box-shadow: 0 15px 35px rgba(92, 64, 51, 0.06);
+            position: relative;
+            display: none; /* Hidden until form submission */
+            animation: slideIn 0.5s ease forwards;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Jagged bottom effect mimicking real receipt paper texture */
+        .receipt-container::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient(-45deg, var(--bg-color) 5px, transparent 0), linear-gradient(45deg, var(--bg-color) 5px, transparent 0);
+            background-size: 10px 10px;
+            background-repeat: repeat-x;
+            background-position: bottom;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .receipt-header {
+            text-align: center;
+            border-bottom: 2px dashed var(--peach);
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+        }
+
+        .receipt-header h3 {
+            font-size: 24px;
+            letter-spacing: 0.5px;
+        }
+
+        .receipt-header p {
+            font-size: 12px;
+            color: #7c5c4c;
+            text-transform: uppercase;
+        }
+
+        .receipt-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 14px;
+            font-size: 14px;
+        }
+
+        .receipt-row label {
+            color: #7c5c4c;
+            font-weight: 500;
+        }
+
+        .receipt-row span {
+            font-weight: 600;
+            color: var(--dark-brown);
+        }
+
+        .receipt-total {
+            border-top: 2px dashed var(--peach);
+            margin-top: 20px;
+            padding-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .receipt-total h4 {
+            font-size: 18px;
+            text-transform: uppercase;
+        }
+
+        .receipt-total .price-tag {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--rose-gold);
+        }
+
+        .success-badge {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        /* Placeholder layout state when no receipt is generated */
+        .receipt-placeholder {
+            background: rgba(250, 237, 205, 0.2);
+            border: 2px dashed var(--rose-gold);
+            border-radius: 20px;
+            padding: 60px 20px;
+            text-align: center;
+            color: #7c5c4c;
+        }
+
+        .receipt-placeholder i {
+            font-size: 40px;
+            color: var(--rose-gold);
+            margin-bottom: 15px;
+        }
+
+        /* --- FLOATING UTILITIES --- */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #25d366;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 999;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background-color: var(--dark-brown);
+            color: var(--bg-color);
+            padding: 30px 8%;
+            text-align: center;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Scroll Progress Bar -->
+    <div id="progress-bar"></div>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="brand-logo">Maahi<span>Beauty</span></div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="packages.html">Packages</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="booking.html" class="active">Booking</a></li>
+        </ul>
+        <a href="#" class="cta-btn">Book Now</a>
+    </nav>
+
+    <!-- Booking Main Core Layout -->
+    <section class="booking-section">
+        
+        <!-- Form Left Block -->
+        <div class="booking-card">
+            <h2>Reserve Your Slot</h2>
+            <p>Fill out the form fields with your correct data details to instantly hold your appointment.</p>
+            
+            <form id="appointmentForm" onsubmit="generateReceipt(event)">
+                <div class="form-group">
+                    <label for="fullName">Full Name</label>
+                    <input type="text" id="fullName" placeholder="enter your name" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="emailAddr">Email Address</label>
+                        <input type="email" id="emailAddr" placeholder="enter your emaill" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phoneNum">Phone Number</label>
+                        <input type="tel" id="phoneNum" placeholder="enter your phon" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="serviceSelect">Select Service / Bundle</label>
+                    <select id="serviceSelect" required onchange="updateEstimatedPrice()">
+                        <option value="" disabled selected>Choose a premium care plan...</option>
+                        <option value="Advanced Hydra Facial" data-price="6,500">Advanced Hydra Facial — Rs. 6,500</option>
+                        <option value="Premium Glow Bundle" data-price="9,990">Premium Glow Bundle — Rs. 9,990</option>
+                        <option value="Royal Elite Bridal Glam" data-price="45,000">Royal Elite Bridal Glam — Rs. 45,000</option>
+                        <option value="Premium Hair Cut & Styling" data-price="4,500">Premium Hair Cut & Styling — Rs. 4,500</option>
+                        <option value="Luxury Manicure & Pedicure" data-price="4,000">Luxury Manicure & Pedicure — Rs. 4,000</option>
+                    </select>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="bookDate">Appointment Date</label>
+                        <input type="date" id="bookDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="bookTime">Preferred Time Slot</label>
+                        <select id="bookTime" required>
+                            <option value="" disabled selected>Select timing...</option>
+                            <option value="12:00 PM - 02:00 PM">12:00 PM - 02:00 PM</option>
+                            <option value="02:00 PM - 04:00 PM">02:00 PM - 04:00 PM</option>
+                            <option value="04:00 PM - 06:00 PM">04:00 PM - 06:00 PM</option>
+                            <option value="06:00 PM - 08:00 PM">06:00 PM - 08:00 PM</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-booking-btn">Confirm Appointment Slot</button>
+            </form>
+        </div>
+
+        <!-- Receipt Right Block -->
+        <div>
+            <!-- Default Placeholder State -->
+            <div class="receipt-placeholder" id="placeholder-box">
+                <i class="fa-solid fa-receipt"></i>
+                <h3>Booking Slip Generator</h3>
+                <p>Fill out the required form fields details to dynamically generate your digital confirmation slip.</p>
+            </div>
+
+            <!-- Live Generated Receipt Box -->
+            <div class="receipt-container" id="receipt-box">
+                <div class="receipt-header">
+                    <div class="success-badge"><i class="fa-solid fa-circle-check"></i> Slot Confirmed</div>
+                    <h3>Glow Beauty Studio</h3>
+                    <p>Karachi, Pakistan • Booking Receipt</p>
+                </div>
+
+                <div class="receipt-row">
+                    <label>Client Name:</label>
+                    <span id="rcpt-name">-</span>
+                </div>
+                <div class="receipt-row">
+                    <label>Phone Line:</label>
+                    <span id="rcpt-phone">-</span>
+                </div>
+                <div class="receipt-row">
+                    <label>Chosen Service:</label>
+                    <span id="rcpt-service">-</span>
+                </div>
+                <div class="receipt-row">
+                    <label>Selected Date:</label>
+                    <span id="rcpt-date">-</span>
+                </div>
+                <div class="receipt-row">
+                    <label>Timing Slot:</label>
+                    <span id="rcpt-time">-</span>
+                </div>
+
+                <div class="receipt-total">
+                    <h4>Total Estimated</h4>
+                    <div class="price-tag" id="rcpt-price">Rs. 0</div>
+                </div>
+                
+                <p style="font-size:11px; text-align:center; color:#7c5c4c; margin-top:25px; font-style:italic;">
+                    Please present a screenshot of this receipt slip at the reception desk on arrival.
+                </p>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- Floating WhatsApp Widget -->
+    <a href="https://wa.me/1234567890" class="whatsapp-float" target="_blank">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <!-- Footer -->
+    <footer>
+        &copy; 2026 Glow Beauty Studio. All Core Dashboard Elements Functional.
+    </footer>
+
+    <!-- INTERACTIVE JAVASCRIPT LOGIC -->
+    <script>
+        // Scroll Progress Bar
+        window.onscroll = function() {
+            let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            let scrolled = (winScroll / height) * 100;
+            document.getElementById("progress-bar").style.width = scrolled + "%";
+        };
+
+        // Date Picker Validation (Disable Old History Past Dates)
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('bookDate').setAttribute('min', today);
+
+        // Form Event Handler to Generate Custom Digital Receipt
+        function generateReceipt(e) {
+            e.preventDefault(); // Stop page reload
+
+            // Extract Values from Inputs
+            const name = document.getElementById('fullName').value;
+            const phone = document.getElementById('phoneNum').value;
+            const serviceSelect = document.getElementById('serviceSelect');
+            const service = serviceSelect.value;
+            const price = serviceSelect.options[serviceSelect.selectedIndex].getAttribute('data-price');
+            const date = document.getElementById('bookDate').value;
+            const time = document.getElementById('bookTime').value;
+
+            // Inject values into the Digital Receipt Card
+            document.getElementById('rcpt-name').innerText = name;
+            document.getElementById('rcpt-phone').innerText = phone;
+            document.getElementById('rcpt-service').innerText = service;
+            document.getElementById('rcpt-date').innerText = date;
+            document.getElementById('rcpt-time').innerText = time;
+            document.getElementById('rcpt-price').innerText = "Rs. " + price;
+
+            // Toggle Layout Blocks Visibility
+            document.getElementById('placeholder-box').style.display = 'none';
+            document.getElementById('receipt-box').style.display = 'block';
+
+            // Smooth Scroll view directly to the generated Receipt on smaller viewports
+            if(window.innerWidth <= 992) {
+                document.getElementById('receipt-box').scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+    </script>
+</body>
+</html>
